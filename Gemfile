@@ -45,6 +45,7 @@ gem "bootsnap", require: false
 gem "manasimu"
 gem "timeout"
 gem "chartkick"
+gem 'thor'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

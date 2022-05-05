@@ -225,6 +225,7 @@ DEPENDENCIES
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
+  thor
   timeout
   turbo-rails (~> 1.0.0)
   tzinfo-data
