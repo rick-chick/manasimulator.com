@@ -219,6 +219,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
+  bundler
   capybara
   chartkick
   debug
