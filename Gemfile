@@ -46,7 +46,7 @@ gem "manasimu"
 gem "timeout"
 gem "chartkick"
 gem 'thor'
-gem 'rake'
+gem 'rake', "13.0.1"
 
 # Use Sass to process CSS
 # gem "sassc-rails"
