@@ -47,6 +47,7 @@ gem "timeout"
 gem "chartkick"
 gem 'thor'
 gem 'rake', "13.0.1"
+gem 'concurrent-ruby', "1.1.6"
 
 # Use Sass to process CSS
 # gem "sassc-rails"
