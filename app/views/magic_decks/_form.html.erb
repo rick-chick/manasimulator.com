@@ -18,19 +18,19 @@
   </div>
 
   <div class="right">
-    <%= form.submit :Simulate %>
+    <%= form.submit t :simulate %>
   </div>
 
   <% if @played_over_drawed %>
-    <h2>play probability if drawed</h2>
+    <h2><%= t :propability_play_if_draw %></h2>
     <div class="chart">
       <%= bar_chart @played_over_drawed %>
     </div>
-    <h2>play probability</h2>
+    <h2><%= t :propability_play %></h2>
     <div class="chart">
       <%= bar_chart @played_over_sims %>
     </div>
-    <h2>mana curve</h2>
+    <h2><%= t :mana_curve %></h2>
     <div class="chart">
       <%= line_chart @mana_curves %>
     </div>

@@ -9,13 +9,13 @@ class MagicDecksController < ApplicationController
       end
       if @magic_deck  
         chart = simulate(@magic_deck.cards)
-        puts chart
         @played_over_drawed = chart[:played_over_drawed]
         @played_over_sims = chart[:played_over_sims]
         @mana_curves = chart[:mana_curves]
         @magic_deck.delete
       else
         @magic_deck = MagicDeck.new
+        @magic_deck.cards = t(:deck_sample)
       end
     rescue => ex
       puts ex
