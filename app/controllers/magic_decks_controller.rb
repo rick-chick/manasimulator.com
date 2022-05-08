@@ -87,10 +87,11 @@ class MagicDecksController < ApplicationController
         land = card.contents.select {|c| c.types == "Land"}.first
         if land
           10.times do |i|
-            card.color_identity.split(',').each do |c|
+            card.color_identity.each do |c|
               mana_curves[c] ||= {}
               played, drawed = card.count(i+1)
-              mana_curves[c][i+1] = played.to_f / 1000
+              mana_curves[c][i+1] ||= 0
+              mana_curves[c][i+1] += played.to_f / 1000
             end
           end
         end
