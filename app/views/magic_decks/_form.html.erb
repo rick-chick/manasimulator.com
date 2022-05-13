@@ -32,7 +32,7 @@
     </div>
     <h2><%= t :mana_curve %></h2>
     <div class="chart">
-      <%= line_chart @mana_curves %>
+      <%= column_chart @mana_curves, stacked: true %>
     </div>
   <% end %>
 
