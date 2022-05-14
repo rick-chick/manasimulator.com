@@ -27,8 +27,8 @@ body {
   width: 100%;
   margin: 0px;
 }
-
 form {
-  min-width: 400px;
-  width: auto;
+  min-width: 150px;
+  max-width: 600px;
+  width: 90%;
 }
