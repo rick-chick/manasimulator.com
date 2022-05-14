@@ -42,5 +42,6 @@ en:
   simulate: "Simulate"
   propability_play: "play probability"
   propability_play_if_draw: "play probability if drawed"
+  propability_playability_if_draw: "playable propability if drawed"
   mana_curve: "mana curve" 
   deck_sample: "Deck\r20 Snow-Covered Plains (KHM) 277\r2 Kabira Takedown (ZNR) 19\r4 Luminarch Aspirant (ZNR) 24\r2 Maul of the Skyclaves (ZNR) 27\r4 Skyclave Apparition (ZNR) 39\r4 Clarion Spirit (KHM) 6\r4 Codespell Cleric (KHM) 7\r4 Usher of the Fallen (KHM) 35\r4 Guiding Voice (STX) 19\r4 Monk of the Open Hand (AFR) 25\r4 Homestead Courage (MID) 24\r4 Intrepid Adversary (MID) 2\r\rSideboard\r1 Environmental Sciences (STX) 1\r1 Expanded Anatomy (STX) 2\r1 Inkling Summoning (STX) 195"

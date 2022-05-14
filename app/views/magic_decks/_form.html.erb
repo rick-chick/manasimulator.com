@@ -26,6 +26,10 @@
     <div class="chart">
       <%= bar_chart @played_over_drawed %>
     </div>
+    <h2><%= t :propability_playability_if_draw %></h2>
+    <div class="chart">
+      <%= bar_chart @can_played_over_drawed %>
+    </div>
     <h2><%= t :propability_play %></h2>
     <div class="chart">
       <%= bar_chart @played_over_sims %>

@@ -11,6 +11,7 @@ ja:
     2: "'Input'テキストエリアにエクスポート結果を貼り付け, 'シミュレート'をクリックします"
   simulate: "シミュレート"
   propability_play: "プレイした確率"
+  propability_playability_if_draw: "プレイできる確率（ドローしていた場合）"
   propability_play_if_draw: "プレイした確率（ドローしていた場合）"
   mana_curve: "マナカーブ" 
   deck_sample: "デッキ\r20 冠雪の平地 (KHM) 277\r2 カビーラの叩き伏せ (ZNR) 19\r4 光輝王の野心家 (ZNR) 24\r2 スカイクレイブの大鎚 (ZNR) 27\r4 スカイクレイブの亡霊 (ZNR) 39\r4 クラリオンのスピリット (KHM) 6\r4 掟綴りの僧侶 (KHM) 7\r4 堕ちたる者の案内者 (KHM) 35\r4 導きの声 (STX) 19\r4 素拳のモンク (AFR) 25\r4 農家の勇気 (MID) 24\r4 剛胆な敵対者 (MID) 25\r\r サイドボード\r1 環境科学 (STX) 1\r1 拡張解剖学 (STX) 2\r1 墨獣召喚学 (STX) 195\r"
