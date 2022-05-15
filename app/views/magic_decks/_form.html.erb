@@ -17,24 +17,35 @@
     <%= form.hidden_field :probabilities %>
   </div>
 
-  <div class="right">
-    <%= form.submit t :simulate %>
+  <div class="column">
+    <%= form.label :turns, t(:turns), class: :label %>
+    <%= form.number_field :turns %>
+    <%= form.label :simulations, t(:simulations), class: :label %>
+    <%= form.number_field :simulations %>
   </div>
 
+  <%= form.submit t(:simulate), class: :simulate %>
+
+  <h2><%= t :propability_play_if_draw %></h2>
   <% if @played_over_drawed %>
-    <h2><%= t :propability_play_if_draw %></h2>
     <div class="chart">
       <%= bar_chart @played_over_drawed %>
     </div>
-    <h2><%= t :propability_playability_if_draw %></h2>
+  <% end %>
+  <h2><%= t :propability_playability_if_draw %></h2>
+  <% if @can_played_over_drawed %>
     <div class="chart">
       <%= bar_chart @can_played_over_drawed %>
     </div>
-    <h2><%= t :propability_play %></h2>
+  <% end %>
+  <h2><%= t :propability_play %></h2>
+  <% if @played_over_sims %>
     <div class="chart">
       <%= bar_chart @played_over_sims %>
     </div>
-    <h2><%= t :mana_curve %></h2>
+  <% end %>
+  <h2><%= t :mana_curve %></h2>
+  <% if @mana_curves %>
     <div class="chart">
       <%= column_chart @mana_curves, stacked: true %>
     </div>

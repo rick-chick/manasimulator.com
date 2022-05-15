@@ -8,7 +8,7 @@ class MagicDecksController < ApplicationController
         @magic_deck = MagicDeck.find(flash[:id])
       end
       if @magic_deck  
-        chart = simulate(@magic_deck.cards)
+        chart = simulate(@magic_deck)
         @played_over_drawed = chart[:played_over_drawed]
         @can_played_over_drawed = chart[:can_played_over_drawed]
         @played_over_sims = chart[:played_over_sims]
@@ -17,6 +17,8 @@ class MagicDecksController < ApplicationController
       else
         @magic_deck = MagicDeck.new
         @magic_deck.cards = t(:deck_sample)
+        @magic_deck.turns = 10
+        @magic_deck.simulations = 100
       end
     rescue => ex
       puts ex
@@ -49,16 +51,17 @@ class MagicDecksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def magic_deck_params
-      params.require(:magic_deck).permit(:cards, :probabilities)
+      params.require(:magic_deck).permit(:cards, :probabilities, :turns, :simulations)
     end
 
-    def simulate(deck_string)
+    def simulate(magic_deck)
+      deck_string = magic_deck.cards
       deck, cards = Deck.create(deck_string.gsub(/(\\r\\n|\\r|\\n)/, "\n").split("\n"))
       return {} if not deck || cards.empty?
       config = SimulatorConfig.new
-      config.deck = deck
-      config.turns = 10
-      config.simulations = 1000
+      config.deck =deck 
+      config.turns = magic_deck.turns || 10
+      config.simulations = magic_deck.simulations || 100
       simulator = Simulator.new(config)
       simulator.run
       sorted = [] 

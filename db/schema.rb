@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_04_235101) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_15_045948) do
   create_table "magic_decks", force: :cascade do |t|
     t.string "cards"
     t.string "probabilities"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "turns"
+    t.integer "simulations"
   end
 
   create_table "requests", force: :cascade do |t|

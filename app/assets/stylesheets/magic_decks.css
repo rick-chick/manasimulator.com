@@ -26,6 +26,26 @@
 
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  min-width: 100px;
+  width: 150px;
+  font-size: 0.9rem;
+}
+
 form img {
   max-width: 100%;
+}
+
+.simulate {
+  margin-top: 10px;
 }
