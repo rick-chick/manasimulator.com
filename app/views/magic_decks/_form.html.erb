@@ -19,9 +19,9 @@
 
   <div class="column">
     <%= form.label :turns, t(:turns), class: :label %>
-    <%= form.number_field :turns %>
+    <%= form.number_field :turns, max: 20, min: 1%>
     <%= form.label :simulations, t(:simulations), class: :label %>
-    <%= form.number_field :simulations %>
+    <%= form.number_field :simulations, max: 1000, min: 1 %>
   </div>
 
   <%= form.submit t(:simulate), class: :simulate %>
