@@ -76,7 +76,7 @@ class MagicDecksController < ApplicationController
         if spell
           mana_cost = spell.mana_cost
           name = "#{card.name.split('//')[0].chomp.strip} : #{mana_cost}"
-          played, drawed, can_played = card.count
+          played, drawed, can_played, mana_sources = card.count
           a = played.to_f / config.simulations * 100
           b = played.to_f / drawed * 100
           c = can_played.to_f / drawed * 100
@@ -88,21 +88,16 @@ class MagicDecksController < ApplicationController
 
       mana_curves = {}
       sorted.map do |card|
-        land = card.contents.select {|c| c.types == "Land"}.first
-        if land
+        if card.mana_source?
           10.times do |i|
+            turn = i + 1
+            played, drawed, can_play, mana_sources = card.count(turn)
             card.color_identity.each do |c|
               mana_curves[c] ||= {}
-              played, drawed = card.count(i+1)
-              mana_curves[c][i+1] ||= 0
-              mana_curves[c][i+1] += played.to_f / 1000
+              mana_curves[c][turn] ||= 0
+              mana_curves[c][turn] += mana_sources[c].to_f / config.simulations
             end
           end
-        end
-      end
-      9.times do |i|
-        mana_curves.keys.each do |c|
-          mana_curves[c][i+2] = mana_curves[c][i+2] + mana_curves[c][i+1]
         end
       end
       mana_curves = mana_curves.keys.map do |c|
