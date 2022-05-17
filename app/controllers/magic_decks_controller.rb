@@ -1,3 +1,4 @@
+require 'json'
 class MagicDecksController < ApplicationController
   before_action :set_magic_deck, only: %i[ show edit update destroy ]
 
@@ -9,17 +10,18 @@ class MagicDecksController < ApplicationController
       end
       if @magic_deck  
         chart = simulate(@magic_deck)
-        @played_over_drawed = chart[:played_over_drawed]
-        @can_played_over_drawed = chart[:can_played_over_drawed]
-        @played_over_sims = chart[:played_over_sims]
-        @mana_curves = chart[:mana_curves]
         @magic_deck.delete
       else
         @magic_deck = MagicDeck.new
         @magic_deck.cards = t(:deck_sample)
         @magic_deck.turns = 10
         @magic_deck.simulations = 100
+        chart = JSON.parse(t(:deck_sample_json))
       end
+      @played_over_drawed = chart['played_over_drawed']
+      @can_played_over_drawed = chart['can_played_over_drawed']
+      @played_over_sims = chart['played_over_sims']
+      @mana_curves = chart['mana_curves']
     rescue => ex
       puts ex
       @magic_deck = MagicDeck.new
@@ -107,11 +109,13 @@ class MagicDecksController < ApplicationController
         {name: c, data:mana_curves[c]}
       end
 
-      {
-        played_over_drawed: played_over_drawed, 
-        played_over_sims: played_over_sims, 
-        can_played_over_drawed: can_played_over_drawed, 
-        mana_curves: mana_curves
+      ret = {
+        "played_over_drawed" =>  played_over_drawed, 
+        "played_over_sims" => played_over_sims, 
+        "can_played_over_drawed" => can_played_over_drawed, 
+        "mana_curves" => mana_curves
       }
+      puts JSON.generate(ret)
+      ret
     end
 end
