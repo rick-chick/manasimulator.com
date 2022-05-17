@@ -1,7 +1,7 @@
 <%= form_with(model: magic_deck) do |form| %>
   <% if magic_deck.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(magic_deck.errors.count, "error") %> prohibited this magic_deck from being saved:</h2>
+      <h3><%= pluralize(magic_deck.errors.count, "error") %> prohibited this magic_deck from being saved:</h3>
 
       <ul>
         <% magic_deck.errors.each do |error| %>
@@ -26,25 +26,25 @@
 
   <%= form.submit t(:simulate), class: :simulate %>
 
-  <h2><%= t :propability_play_if_draw %></h2>
+  <h3><%= t :propability_play_if_draw %></h3>
   <% if @played_over_drawed %>
     <div class="chart">
       <%= bar_chart @played_over_drawed %>
     </div>
   <% end %>
-  <h2><%= t :propability_playability_if_draw %></h2>
+  <h3><%= t :propability_playability_if_draw %></h3>
   <% if @can_played_over_drawed %>
     <div class="chart">
       <%= bar_chart @can_played_over_drawed %>
     </div>
   <% end %>
-  <h2><%= t :propability_play %></h2>
+  <h3><%= t :propability_play %></h3>
   <% if @played_over_sims %>
     <div class="chart">
       <%= bar_chart @played_over_sims %>
     </div>
   <% end %>
-  <h2><%= t :mana_curve %></h2>
+  <h3><%= t :mana_curve %></h3>
   <% if @mana_curves %>
     <div class="chart">
       <%= column_chart @mana_curves, stacked: true %>
