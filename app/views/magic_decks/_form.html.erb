@@ -13,7 +13,7 @@
 
   <h2>Input</h2>
   <div>
-    <%= form.text_area :cards, rows: '20', style:'width: 100%;' %>
+    <%= form.text_area :cards, rows: '20', style:'width: 100%;', id: :deck%>
     <%= form.hidden_field :probabilities %>
   </div>
 
@@ -26,25 +26,25 @@
 
   <%= form.submit t(:simulate), class: :simulate %>
 
-  <h3><%= t :propability_play_if_draw %></h3>
+  <h3><%= simple_format(t(:propability_play_if_draw)) %></h3>
   <% if @played_over_drawed %>
     <div class="chart">
       <%= bar_chart @played_over_drawed %>
     </div>
   <% end %>
-  <h3><%= t :propability_playability_if_draw %></h3>
+  <h3><%= simple_format(t(:propability_playability_if_draw)) %></h3>
   <% if @can_played_over_drawed %>
     <div class="chart">
       <%= bar_chart @can_played_over_drawed %>
     </div>
   <% end %>
-  <h3><%= t :propability_play %></h3>
+  <h3><%= simple_format(t(:propability_play)) %></h3>
   <% if @played_over_sims %>
     <div class="chart">
       <%= bar_chart @played_over_sims %>
     </div>
   <% end %>
-  <h3><%= t :mana_curve %></h3>
+  <h3><%= simple_format(t(:mana_curve)) %></h3>
   <% if @mana_curves %>
     <div class="chart">
       <%= column_chart @mana_curves, stacked: true %>

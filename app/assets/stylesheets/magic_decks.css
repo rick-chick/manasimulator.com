@@ -46,3 +46,7 @@ form img {
 .simulate {
   margin-top: 10px;
 }
+
+#deck {
+  height: 250px;
+}
