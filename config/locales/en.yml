@@ -31,7 +31,8 @@
 
 en:
   title: "ManaCurveSimulator"
-  hello: "Hello world"
+  sub_title: "MTG Mana Curve Simulator"
+  description: "This Site simulates deeply your deck to show mana curve in graph. Input can be done using Magic;the Gathering Arena deck export."
   nav:
     top: "Simulator"
     usage: "Usage"

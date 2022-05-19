@@ -1,5 +1,7 @@
 ja:
   title: "ManaCurveSimulator"
+  sub_title: "MTG マナカーブシミュレータ"
+  description: "シミュレーションにより、あなたのデッキのマナカーブを求めます。Magic;the Gathering Arenaのエクスポートから簡単に入力できます。"
   nav:
     top: "シミュレータ"
     usage: "使い方"
