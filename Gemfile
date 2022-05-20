@@ -46,6 +46,8 @@ gem "manasimu", "0.0.15"
 gem "timeout"
 gem "chartkick"
 gem "http_accept_language"
+gem 'sitemap_generator'
+gem 'roboto'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
