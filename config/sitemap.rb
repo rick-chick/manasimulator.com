@@ -1,7 +1,7 @@
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.create({
   compress: false,
-  default_host: "https://mtg-mana-simulator.herokuapp.com/"
+  default_host: "https://mtg-mana-simulator.herokuapp.com"
 }) do
   # Put links creation logic here.
   #
