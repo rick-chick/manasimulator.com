@@ -1,2 +1,2 @@
 # See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
-Sitemap: https://mtg-mana-simulator.herokuapp.com/sitemap.xml.gz
+Sitemap: https://mtg-mana-simulator.herokuapp.com/sitemap.xml
