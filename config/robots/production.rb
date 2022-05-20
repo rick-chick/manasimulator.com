@@ -1,1 +1,1 @@
-Sitemmap: https://mtg-mana-simulator.herokuapp.com/sitemap.xml.gz
+Sitemmap: https://mtg-mana-simulator.herokuapp.com/sitemap.xml
