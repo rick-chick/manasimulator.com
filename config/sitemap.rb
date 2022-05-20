@@ -1,7 +1,8 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "https://mtg-mana-simulator.herokuapp.com/"
-
-SitemapGenerator::Sitemap.create(compress: false) do
+SitemapGenerator::Sitemap.create({
+  compress: false,
+  default_host: "https://mtg-mana-simulator.herokuapp.com/"
+}) do
   # Put links creation logic here.
   #
   # The root path '/' and sitemap index file are added automatically for you.
