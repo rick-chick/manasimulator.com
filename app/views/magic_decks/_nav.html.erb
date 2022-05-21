@@ -1,5 +1,14 @@
-<ul id="nav">
-  <li><%= link_to t('nav.top'), root_path %></li>
-  <li><%= link_to t('nav.usage'), '#nav_usage' %></li>
-  <li><%= link_to t('nav.contact'), '#nav_contact' %></li>
-</ul>
+<nav class="bg-primary navbar-dark">
+  <div class="navbar navbar-expand-sm">
+    <%= link_to t(:title), root_path, class: ['navbar-brand']%>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item"><%= link_to t('nav.usage'), '#nav_usage', class: ['nav-link'] %></li>
+        <li class="nav-item"><%= link_to t('nav.contact'), '#nav_contact', class: ['nav-link'] %></li>
+      </ul>
+    </div>
+  </div>
+</nav>

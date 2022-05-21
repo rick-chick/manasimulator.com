@@ -48,6 +48,7 @@ gem "chartkick"
 gem "http_accept_language"
 gem 'sitemap_generator'
 gem 'roboto'
+gem 'bootstrap-sass', '~> 3.3.6'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
@@ -79,3 +80,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "dartsass-rails", "~> 0.3.0"

@@ -11,46 +11,57 @@
     </div>
   <% end %>
 
-  <h2>Input</h2>
+  <h2 class="text-dark display-4">Input</h2>
   <div>
-    <%= form.text_area :cards, rows: '20', style:'width: 100%;', id: :deck%>
+    
+    <div class="input-group mb-3">
+      <span class="input-group-text"><%= t :deck %></span>
+      <%= form.text_area :cards, rows: '20', id: :deck, 
+        class: ['form-control'] %>
+    </div>
     <%= form.hidden_field :probabilities %>
   </div>
 
   <div class="column">
-    <%= form.label :turns, t(:turns), class: :label %>
-    <%= form.number_field :turns, max: 20, min: 1%>
-    <%= form.label :simulations, t(:simulations), class: :label %>
-    <%= form.number_field :simulations, max: 1000, min: 1 %>
+    <div class="input-group mb-3">
+      <span class="input-group-text"><%= t :turns%></span>
+      <%= form.number_field :turns, max: 20, min: 1, class: ['form-control'] %>
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text"><%= t :simulations%></span>
+      <%= form.number_field :simulations, max: 1000, min: 1 , class: ['form-control'] %>
+    </div>
   </div>
 
-  <%= form.submit t(:simulate), class: :simulate %>
+  <div class="d-grid">
+    <%= form.submit t(:simulate), class: ['btn', 'btn-secondary', 'mb-5'] %>
+  </div>
 
-  <h3><%= simple_format(t(:propability_play_if_draw)) %></h3>
+  <h4 class="text-dark"><%= simple_format(t(:propability_play_if_draw)) %></h4>
   <% if @played_over_drawed %>
     <div class="chart">
       <%= bar_chart @played_over_drawed %>
     </div>
   <% end %>
-  <h3><%= simple_format(t(:propability_playability_if_draw)) %></h3>
+  <h4 class="text-dark"><%= simple_format(t(:propability_playability_if_draw)) %></h4>
   <% if @can_played_over_drawed %>
     <div class="chart">
       <%= bar_chart @can_played_over_drawed %>
     </div>
   <% end %>
-  <h3><%= simple_format(t(:propability_play)) %></h3>
+  <h4 class="text-dark"><%= simple_format(t(:propability_play)) %></h4>
   <% if @played_over_sims %>
     <div class="chart">
       <%= bar_chart @played_over_sims %>
     </div>
   <% end %>
-  <h3><%= simple_format(t(:mana_curve)) %></h3>
+  <h4 class="text-dark"><%= simple_format(t(:mana_curve)) %></h4>
   <% if @mana_curves %>
     <div class="chart">
       <%= column_chart @mana_curves, stacked: true %>
     </div>
   <% end %>
-  <h3><%= simple_format(t(:effective_curves)) %></h3>
+  <h4 class="text-dark"><%= simple_format(t(:effective_curves)) %></h4>
   <% if @effective_curves %>
     <div class="chart">
       <%= line_chart @effective_curves %>
