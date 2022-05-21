@@ -50,5 +50,11 @@
       <%= column_chart @mana_curves, stacked: true %>
     </div>
   <% end %>
+  <h3><%= simple_format(t(:effective_curves)) %></h3>
+  <% if @effective_curves %>
+    <div class="chart">
+      <%= line_chart @effective_curves %>
+    </div>
+  <% end %>
 
 <% end %>

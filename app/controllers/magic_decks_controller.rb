@@ -22,6 +22,7 @@ class MagicDecksController < ApplicationController
       @can_played_over_drawed = chart['can_played_over_drawed']
       @played_over_sims = chart['played_over_sims']
       @mana_curves = chart['mana_curves']
+      @effective_curves = chart['effective_curves']
     rescue => ex
       puts ex
       @magic_deck = MagicDeck.new
@@ -61,7 +62,7 @@ class MagicDecksController < ApplicationController
       deck, cards = Deck.create(deck_string.gsub(/(\\r\\n|\\r|\\n)/, "\n").split("\n"))
       return {} if not deck || cards.empty?
       config = SimulatorConfig.new
-      config.deck =deck 
+      config.deck = deck 
       config.turns = magic_deck.turns || 10
       config.simulations = magic_deck.simulations || 100
       simulator = Simulator.new(config)
@@ -77,9 +78,8 @@ class MagicDecksController < ApplicationController
       played_over_sims = {}
       can_played_over_drawed = {}
       sorted.map do |card| 
-        spell = card.contents.select {|c| c.types != "Land"}.first
-        if spell
-          mana_cost = spell.mana_cost
+        if not card.mana_source?
+          mana_cost = card.mana_cost
           name = "#{card.name.split('//')[0].chomp.strip} : #{mana_cost}"
           played, drawed, can_played, mana_sources = card.count
           a = played.to_f / config.simulations * 100
@@ -92,28 +92,40 @@ class MagicDecksController < ApplicationController
       end
 
       mana_curves = {}
+      play_curves = {}
+      mana_total_curves = {}
       sorted.map do |card|
-        if card.mana_source?
-          10.times do |i|
-            turn = i + 1
-            played, drawed, can_play, mana_sources = card.count(turn)
+        10.times do |i|
+          turn = i + 1
+          played, drawed, can_play, mana_sources = card.count(turn)
+          if card.mana_source?
             card.color_identity.each do |c|
               mana_curves[c] ||= {}
               mana_curves[c][turn] ||= 0
               mana_curves[c][turn] += mana_sources[c].to_f / config.simulations
+              mana_total_curves[turn] ||= 0
+              mana_total_curves[turn] += mana_sources[c].to_f
             end
+          else
+            play_curves[turn] ||= 0
+            play_curves[turn] += card.converted_mana_cost.to_f * played
           end
         end
+      end
+
+      effective_curves = {}
+      mana_total_curves.keys.map do |turn|
+        effective_curves[turn] = (play_curves[turn] ? play_curves[turn].to_f : 0) / mana_total_curves[turn] * 100
       end
       mana_curves = mana_curves.keys.map do |c|
         {name: c, data:mana_curves[c]}
       end
-
       ret = {
         "played_over_drawed" =>  played_over_drawed, 
         "played_over_sims" => played_over_sims, 
         "can_played_over_drawed" => can_played_over_drawed, 
-        "mana_curves" => mana_curves
+        "mana_curves" => mana_curves,
+        "effective_curves" => effective_curves,
       }
       puts JSON.generate(ret)
       ret
