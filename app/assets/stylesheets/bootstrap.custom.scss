@@ -1,73 +1,73 @@
 // Custom.scss
- Option B: Include parts of Bootstrap
+// Option B: Include parts of Bootstrap
 
- 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
-mport "bootstrap/scss/functions";
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "bootstrap/scss/functions";
 
- 2. Include any default variable overrides here
- Default variable overrides
-rimary:  #99B2E5;
-econdary:#3366CC;
-uccess:  #449D4D;
-nfo:     #4287A5;
-arning:  #C7B351;
-anger:   #AC556D;
-ight:    #C6C6C6;
-ark:     #1C1C1C;
+// 2. Include any default variable overrides here
+// Default variable overrides
+$primary:  #99B2E5;
+$secondary:#3366CC;
+$success:  #449D4D;
+$info:     #4287A5;
+$warning:  #C7B351;
+$danger:   #AC556D;
+$light:    #C6C6C6;
+$dark:     #1C1C1C;
 
-ont-family-base: sans-serif;
+$font-family-base: sans-serif;
 
- 3. Include remainder of required Bootstrap stylesheets
-mport "bootstrap/scss/variables";
+// 3. Include remainder of required Bootstrap stylesheets
+@import "bootstrap/scss/variables";
 
- 4. Include any default map overrides here
+// 4. Include any default map overrides here
 
- 5. Include remainder of required parts
- @import "bootstrap/scss/maps";
-mport "bootstrap/scss/mixins";
-mport "bootstrap/scss/root";
+// 5. Include remainder of required parts
+// @import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/root";
 
- 6. Optionally include any other parts as needed
-mport "bootstrap/scss/utilities";
-mport "bootstrap/scss/reboot";
-mport "bootstrap/scss/type";
-mport "bootstrap/scss/images";
-mport "bootstrap/scss/containers";
-mport "bootstrap/scss/grid";
-mport "bootstrap/scss/helpers";
-mport "bootstrap/scss/root";
-mport "bootstrap/scss/reboot";
-mport "bootstrap/scss/type";
-mport "bootstrap/scss/images";
-mport "bootstrap/scss/containers";
-mport "bootstrap/scss/grid";
-mport "bootstrap/scss/tables";
-mport "bootstrap/scss/forms";
-mport "bootstrap/scss/buttons";
-mport "bootstrap/scss/transitions";
-mport "bootstrap/scss/dropdown";
-mport "bootstrap/scss/button-group";
-mport "bootstrap/scss/nav";
-mport "bootstrap/scss/navbar";
-mport "bootstrap/scss/card";
-mport "bootstrap/scss/accordion";
-mport "bootstrap/scss/breadcrumb";
-mport "bootstrap/scss/pagination";
-mport "bootstrap/scss/badge";
-mport "bootstrap/scss/alert";
-mport "bootstrap/scss/progress";
-mport "bootstrap/scss/list-group";
-mport "bootstrap/scss/close";
-mport "bootstrap/scss/toasts";
-mport "bootstrap/scss/modal";
-mport "bootstrap/scss/tooltip";
-mport "bootstrap/scss/popover";
-mport "bootstrap/scss/carousel";
-mport "bootstrap/scss/spinners";
-mport "bootstrap/scss/offcanvas";
-mport "bootstrap/scss/placeholders";
+// 6. Optionally include any other parts as needed
+@import "bootstrap/scss/utilities";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/helpers";
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/tables";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/dropdown";
+@import "bootstrap/scss/button-group";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/card";
+@import "bootstrap/scss/accordion";
+@import "bootstrap/scss/breadcrumb";
+@import "bootstrap/scss/pagination";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/alert";
+@import "bootstrap/scss/progress";
+@import "bootstrap/scss/list-group";
+@import "bootstrap/scss/close";
+@import "bootstrap/scss/toasts";
+@import "bootstrap/scss/modal";
+@import "bootstrap/scss/tooltip";
+@import "bootstrap/scss/popover";
+@import "bootstrap/scss/carousel";
+@import "bootstrap/scss/spinners";
+@import "bootstrap/scss/offcanvas";
+@import "bootstrap/scss/placeholders";
 
- 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
-mport "bootstrap/scss/utilities/api";
+// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "bootstrap/scss/utilities/api";
 
- 8. Add additional custom code here
+// 8. Add additional custom code here
