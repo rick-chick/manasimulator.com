@@ -98,8 +98,9 @@ class MagicDecksController < ApplicationController
         10.times do |i|
           turn = i + 1
           played, drawed, can_play, mana_sources = card.count(turn)
-          if card.mana_source?
-            card.color_identity.each do |c|
+          if mana_sources and mana_sources.any?
+            colors = mana_sources.map {|c, num| c}.uniq
+            colors.each do |c|
               mana_curves[c] ||= {}
               mana_curves[c][turn] ||= 0
               mana_curves[c][turn] += mana_sources[c].to_f / config.simulations
