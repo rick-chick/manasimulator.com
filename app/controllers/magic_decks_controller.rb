@@ -1,4 +1,5 @@
 require 'json'
+require 'net/https'
 class MagicDecksController < ApplicationController
   before_action :set_magic_deck, only: %i[ show edit update destroy ]
 
@@ -44,6 +45,52 @@ class MagicDecksController < ApplicationController
         format.json { render :show, status: :created, location: @magic_deck }
       end
     end
+  end
+
+  # POST /magic_decks/image
+  def image
+    return if not params['base64']
+    return if not params['base64'] =~ /^data:image\/jpeg;base64,/
+
+    # API URL
+    api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
+
+    # APIRequest Paramter
+    request_params = {
+      requests: [{
+        image: {
+          content: params['base64'][23..-1]
+        },
+        features: [
+          {
+            type: 'DOCUMENT_TEXT_DETECTION'
+          }
+        ]
+      }]
+    }.to_json
+
+    # Google Cloud Vision API
+    uri = URI.parse(api_url)
+    https = Net::HTTP.new(uri.host, uri.port)
+    https.use_ssl = true
+    request = Net::HTTP::Post.new(uri.request_uri)
+    request['Content-Type'] = 'application/json'
+    response = https.request(request, request_params)
+
+    # APIレスポンス出力
+    json = JSON.parse(response.body)
+
+    lines = json['responses'][0]['fullTextAnnotation']['text'].split("\n")
+    lines.sort!.uniq!.select! do |a| 
+      a.chomp!
+      a != ""
+    end
+    card_types = Deck.find_card_types(lines)
+    texts =["Deck"]
+    card_types.each do |type|
+      texts << "1 #{type.name} (#{type.set_code}) #{type.number}"
+    end
+    render json: {deck: texts.join("\n")}
   end
 
   private

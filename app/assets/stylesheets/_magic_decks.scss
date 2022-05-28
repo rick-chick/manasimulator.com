@@ -79,3 +79,19 @@ form img {
 #deck {
   height: 250px;
 }
+
+.material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 700,
+  'GRAD' 200,
+  'opsz' 48
+}
+
+.paste-deck {
+  position:absolute;
+  right: 30px;
+  top: 20px;
+  cursor: pointer;
+  z-index: 5;
+}
