@@ -83,10 +83,15 @@ class MagicDecksController < ApplicationController
     lines = json['responses'][0]['fullTextAnnotation']['text'].split("\n")
     lines.sort!.uniq!.select! do |a| 
       a.chomp!
+      a.sub!(/^\(/, '')
       a != ""
     end
+    puts lines.join('//')
     card_types = Deck.find_card_types(lines)
     texts =["Deck"]
+    card_types.sort! do |a,b|
+      a.converted_mana_cost <=> b.converted_mana_cost 
+    end
     card_types.each do |type|
       texts << "1 #{type.name} (#{type.set_code}) #{type.number}"
     end
