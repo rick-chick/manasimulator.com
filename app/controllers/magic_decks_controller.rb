@@ -118,7 +118,14 @@ class MagicDecksController < ApplicationController
       config.turns = magic_deck.turns || 10
       config.simulations = magic_deck.simulations || 100
       simulator = Simulator.new(config)
-      simulator.run
+
+      begin
+        simulator.run
+      rescue => ex
+        puts ex
+        return {}
+      end
+
       sorted = [] 
       cards.each do |card|
         sorted << card
