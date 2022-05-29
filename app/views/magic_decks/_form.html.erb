@@ -16,9 +16,9 @@
     <div>
       
       <div class="input-group mb-3">
-        <span class="input-group-text"><%= t :deck %></span>
+        <span class="input-group-text" data-magic-decks-target="numcards"><%= t :deck %></span>
         <%= form.text_area :cards, rows: '20', id: :deck, 
-          class: ['form-control'], 'data-magic-decks-target':'deck' %>
+          class: ['form-control'], 'data-magic-decks-target':'deck', 'data-action': 'keyup->magic-decks#deckChange' %>
         <span class="material-icons material-symbols-rounded paste-deck" data-action='click->magic-decks#paste' >
           content_paste_go
         </span>

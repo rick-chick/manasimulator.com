@@ -4,13 +4,36 @@ import $ from 'jquery';
 
 export default class extends Controller {
 
-  static targets = ['deck']
+  static targets = ['deck', 'numcards']
   ctrlDown = false
   ctrlKey = 17
   cmdKey = 91
   vKey = 86
 
-  connect() {
+  connect(e) {
+    this.deckChange(e);
+  }
+
+  deckChange(e) {
+    var deck = this.deckTarget.value;
+    if (!deck) {
+      return;
+    }
+    var lines = deck.split("\n");
+    var cards = 0;
+    for (var i = 0; i < lines.length; i ++ ) {
+      var line = lines[i];
+      if (line == "") {
+        break;
+      }
+      var columns = line.split(" ");
+      if (columns[0] != "" && isFinite(columns[0])) {
+        cards += parseInt(columns[0]);
+      }
+    }
+    var label = this.numcardsTarget.innerText;
+    label = label.split("\n")[0];
+    this.numcardsTarget.innerText = label + "\n" + cards;
   }
 
   paste(e) {
@@ -92,4 +115,5 @@ export default class extends Controller {
       }
     )
   }
+
 }
