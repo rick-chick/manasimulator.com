@@ -122,7 +122,7 @@ class MagicDecksController < ApplicationController
       begin
         simulator.run
       rescue => ex
-        puts ex
+        p ex.backtrace
         return {}
       end
 
