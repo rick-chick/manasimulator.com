@@ -96,7 +96,7 @@ class MagicDecksController < ApplicationController
     end
     card_types.each do |type|
       name = type.name
-      name = type.names[0] if type.language = 'ja'
+      name = type.names[0] if type.language == 'ja'
       texts << "1 #{name} (#{type.set_code}) #{type.number}"
     end
     render json: {deck: texts.join("\n")}
