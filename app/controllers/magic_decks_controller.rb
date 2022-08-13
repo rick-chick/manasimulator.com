@@ -82,13 +82,14 @@ class MagicDecksController < ApplicationController
 
     lines = json['responses'][0]['fullTextAnnotation']['text'].split("\n")
     lines = lines.sort!.uniq!
+    lines = [] if not lines
     lines.select! do |a| 
       a.chomp!
       a.strip!
       a.lstrip!
       a.sub!(/^\(/, '')
       a != ""
-    end if lines
+    end
     card_types = Deck.find_card_types(lines)
     texts =["Deck"]
     card_types.sort! do |a,b|
