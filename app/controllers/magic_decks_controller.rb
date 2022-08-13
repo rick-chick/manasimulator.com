@@ -81,14 +81,14 @@ class MagicDecksController < ApplicationController
     json = JSON.parse(response.body)
 
     lines = json['responses'][0]['fullTextAnnotation']['text'].split("\n")
-    lines.sort!.uniq!.select! do |a| 
+    lines = lines.sort!.uniq!
+    lines.select! do |a| 
       a.chomp!
       a.strip!
       a.lstrip!
       a.sub!(/^\(/, '')
       a != ""
-    end
-    puts lines.join('//')
+    end if lines
     card_types = Deck.find_card_types(lines)
     texts =["Deck"]
     card_types.sort! do |a,b|
@@ -191,7 +191,6 @@ class MagicDecksController < ApplicationController
         "mana_curves" => mana_curves,
         "effective_curves" => effective_curves,
       }
-      puts JSON.generate(ret)
       ret
     end
 end
