@@ -115,17 +115,30 @@ class MagicDecksController < ApplicationController
     deck_string = magic_deck[:cards]
     deck, cards = Deck.create(deck_string.gsub(/(\\r\\n|\\r|\\n)/, "\n").split("\n"))
     details = []
-    cards.each do |card|
+    threads = []
+    cards.each_with_index do |card, i|
       next if not card.multiverseid
-      card_info = scrape_legalities(card.multiverseid)
-      next if not card_info.legalities
-      details << {
-        set_code: card.set_code,
-        number: card.number,
-        name: card.name,
-        multiverseid: card.multiverseid,
-        legalities: card_info.legalities
-      }
+      if i % 8 == 7
+        sleep 5
+      else
+        sleep 0.1
+      end
+      threads << Thread.new do
+        Thread.pass
+        card_info = scrape_legalities(card.multiverseid)
+        if card_info.legalities
+          details << {
+            set_code: card.set_code,
+            number: card.number,
+            name: card.name,
+            multiverseid: card.multiverseid,
+            legalities: card_info.legalities
+          }
+        end
+      end
+    end
+    threads.each do |t|
+      t.join
     end
     render json: {details: details}
   end
