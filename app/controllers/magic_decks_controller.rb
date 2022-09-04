@@ -24,7 +24,8 @@ class MagicDecksController < ApplicationController
       @played_over_sims = chart['played_over_sims']
       @mana_curves = chart['mana_curves']
       @effective_curves = chart['effective_curves']
-      @formats = Format.all
+      blank = Format.new("Select");
+      @formats = [blank, Format.all].flatten
     rescue => ex
       puts ex
       @magic_deck = MagicDeck.new

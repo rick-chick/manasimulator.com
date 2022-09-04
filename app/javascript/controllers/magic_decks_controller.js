@@ -47,9 +47,22 @@ export default class extends Controller {
     this.numcardsTarget.innerText = label + "\n" + cards;
   }
 
+  takePicture(e) {
+    var _self = this;
+    $("#upload").click();
+  }
+
+  changePicture(e) {
+    if (this.isCommanding()) 
+      return;
+    console.log(e);
+    var bloburl = URL.createObjectURL( e.target.files[0] );
+    this.uploadImage(bloburl, this);
+  }
+
   paste(e) {
     var _self = this;
-    if ($('.paste-deck').text() == 'sync') 
+    if (this.isCommanding()) 
       return;
 
     navigator.clipboard.read().then(
@@ -60,7 +73,6 @@ export default class extends Controller {
           for (var j = 0; j < clipboardItem.types.length; j++) {
             var type = clipboardItem.types[j];
             if (type.indexOf("image") >= 0) {
-              $('.paste-deck').text('sync');
               clipboardItem.getType(type).then(
                 blobimg => {
                   if( blobimg == null ){
@@ -69,45 +81,7 @@ export default class extends Controller {
                   }
 
                   var bloburl = URL.createObjectURL( blobimg );
-
-                  var image = new Image();
-                  var canvas = document.createElement('canvas');
-                  var ctx = canvas.getContext('2d');
-
-                  image.onload = function() {
-                    var sw = image.naturalWidth;
-                    var sh = image.naturalHeight;
-                    var dw = image.naturalWidth;
-                    var dh = image.naturalHeight;
-                    canvas.width = sw;
-                    canvas.height = sh;
-                    ctx.drawImage( image, 0, 0, sw, sh, 0, 0, dw, dh );
-                    var base64 = canvas.toDataURL('image/jpeg', 0.7)
-                    var json = {}
-                    json['base64'] = base64;
-
-                    let url = '/magic_decks/image';
-                    $.ajax({
-                      url: url,
-                      headers: {
-                        'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
-                      },
-                      type: "POST",
-                      data: json,
-                      dataType: "json"
-                    })
-                      .done(function(data) {
-                        _self.deckTarget.value = data["deck"];
-                        this.deckChangedFlgTarget.value = true;
-                      })
-                      .fail(function() {
-                        alert("error!");
-                      })
-                      .always(function() {
-                        $('.paste-deck').text('content_paste_go');
-                      });
-                  };
-                  image.src = bloburl;
+                  this.uploadImage(bloburl, _self);
                 }
               )
             } else if (type.indexOf("text") >=0 ) {
@@ -134,6 +108,9 @@ export default class extends Controller {
     var legality = this.legalityTarget.value;
     var details = this.detailsTarget.value; 
     if (!deck || !legality) {
+      return;
+    }
+    if (legality == "Select") {
       return;
     }
     var updateLegalities = function(data) {
@@ -208,4 +185,67 @@ export default class extends Controller {
     };
   }
 
+  uploadImage = function(bloburl, _self) {
+    _self.hideCommandIcons();
+    var image = new Image();
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+
+    image.onload = function() {
+      var sw = image.naturalWidth;
+      var sh = image.naturalHeight;
+      var dw = image.naturalWidth;
+      var dh = image.naturalHeight;
+      canvas.width = sw;
+      canvas.height = sh;
+      ctx.drawImage( image, 0, 0, sw, sh, 0, 0, dw, dh );
+      var base64 = canvas.toDataURL('image/jpeg', 0.7)
+      var json = {}
+      json['base64'] = base64;
+
+      let url = '/magic_decks/image';
+      $.ajax({
+        url: url,
+        headers: {
+          'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        data: json,
+        dataType: "json"
+      })
+        .done(function(data) {
+          _self.deckTarget.value = data["deck"];
+          _self.deckChangedFlgTarget.value = true;
+        })
+        .fail(function() {
+          alert("error!");
+        })
+        .always(function() {
+          _self.showCommandIcons();
+        });
+    };
+    image.src = bloburl;
+  }
+
+  showCommandIcons = function() {
+    $('.paste-deck').css('display', 'block');
+    $('.take-picture').css('display', 'block');
+    $('.sync').css('display', 'none');
+
+    $('#simulate').prop('disabled', false);
+    $('#legality').prop('disabled', false);
+  }
+
+  hideCommandIcons = function() {
+    $('.paste-deck').css('display', 'none');
+    $('.take-picture').css('display', 'none');
+    $('.sync').css('display', 'block');
+
+    $('#simulate').prop('disabled', true);
+    $('#legality').prop('disabled', true);
+  }
+
+  isCommanding = function() {
+    return $('.sync').css('display') == 'block';
+  }
 }

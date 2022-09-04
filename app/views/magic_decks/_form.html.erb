@@ -16,12 +16,20 @@
     <div>
       
       <div class="input-group mb-3">
-        <span class="input-group-text" data-magic-decks-target="numcards"><%= t :deck %></span>
-        <%= form.text_area :cards, rows: '20', id: :deck, 
-          class: ['form-control'], 'data-magic-decks-target':'deck', 'data-action': 'keyup->magic-decks#deckChange' %>
         <span class="material-icons material-symbols-rounded paste-deck" data-action='click->magic-decks#paste' >
           content_paste_go
         </span>
+        <input id="upload" type="file" name="image" accept="image/*" capture="camera" style="display: none;" data-action='change->magic-decks#changePicture'>
+        <span class="material-symbols-rounded photo-camera take-picture" data-action='click->magic-decks#takePicture' >
+          add_a_photo
+        </span>
+        <span class="material-symbols-rounded sync" style="display:none;">
+          sync
+        </span>
+        <span class="input-group-text" data-magic-decks-target="numcards"><%= t :deck %></span>
+        <%= form.text_area :cards, rows: '20', id: :deck, 
+          class: ['form-control'], 'data-magic-decks-target':'deck', 'data-action': 'keyup->magic-decks#deckChange' %>
+
         <input type="hidden" data-magic-decks-target="deckChangedFlg" />
       </div>
 
@@ -41,15 +49,15 @@
     </div>
 
     <div class="d-grid">
-      <%= form.submit t(:simulate), class: ['btn', 'btn-secondary', 'mb-5'] %>
+      <%= form.submit t(:simulate), class: ['btn', 'btn-secondary', 'mb-5'], id: 'simulate'%>
     </div>
 
     <h4 class="text-dark"><%= simple_format(t(:legalities)) %></h4>
-    <div class="column ">
+    <div class="column" style="margin-bottom: 45px;">
 
       <div class="row legality">
         <%= select_tag "legality", options_from_collection_for_select(@formats, "name", "name"), class: 'form-select',
-         'data-action': 'change->magic-decks#legalityChange', 'data-magic-decks-target': "legality" %>
+          'data-action': 'change->magic-decks#legalityChange', 'data-magic-decks-target': "legality", 'id': 'legality' %>
       </div>
 
       <div class="row legalities">
