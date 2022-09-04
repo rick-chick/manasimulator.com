@@ -24,6 +24,7 @@ class MagicDecksController < ApplicationController
       @played_over_sims = chart['played_over_sims']
       @mana_curves = chart['mana_curves']
       @effective_curves = chart['effective_curves']
+      @formats = Format.all
     rescue => ex
       puts ex
       @magic_deck = MagicDeck.new
@@ -80,27 +81,52 @@ class MagicDecksController < ApplicationController
     # APIレスポンス出力
     json = JSON.parse(response.body)
 
-    lines = json['responses'][0]['fullTextAnnotation']['text'].split("\n")
-    lines = lines.sort!.uniq!
-    lines = [] if not lines
-    lines.select! do |a| 
-      a.chomp!
-      a.strip!
-      a.lstrip!
-      a.sub!(/^\(/, '')
-      a != ""
+    if (json['responses'] and json['responses'][0] and json['responses'][0]['fullTextAnnotation'])
+      lines = json['responses'][0]['fullTextAnnotation']['text'].split("\n")
+      lines = lines.sort!.uniq!
+      lines = [] if not lines
+      lines.select! do |a| 
+        a.chomp!
+        a.strip!
+        a.lstrip!
+        a.sub!(/^\(/, '')
+        a != ""
+      end
+      card_types = Deck.find_card_types(lines)
+      texts =["Deck"]
+      card_types.sort! do |a,b|
+        a.converted_mana_cost <=> b.converted_mana_cost 
+      end
+      card_types.each do |type|
+        name = type.name
+        name = type.names[0] if type.language == 'ja'
+        texts << "1 #{name} (#{type.set_code}) #{type.number}"
+      end
+      render json: {deck: texts.join("\n")}
+    else
+      render json: {deck: ""}
     end
-    card_types = Deck.find_card_types(lines)
-    texts =["Deck"]
-    card_types.sort! do |a,b|
-      a.converted_mana_cost <=> b.converted_mana_cost 
+  end
+
+  # POST /magic_decks/legalities
+  def legalities
+    magic_deck = magic_deck_params
+    deck_string = magic_deck[:cards]
+    deck, cards = Deck.create(deck_string.gsub(/(\\r\\n|\\r|\\n)/, "\n").split("\n"))
+    details = []
+    cards.each do |card|
+      next if not card.multiverseid
+      card_info = scrape_legalities(card.multiverseid)
+      next if not card_info.legalities
+      details << {
+        set_code: card.set_code,
+        number: card.number,
+        name: card.name,
+        multiverseid: card.multiverseid,
+        legalities: card_info.legalities
+      }
     end
-    card_types.each do |type|
-      name = type.name
-      name = type.names[0] if type.language == 'ja'
-      texts << "1 #{name} (#{type.set_code}) #{type.number}"
-    end
-    render json: {deck: texts.join("\n")}
+    render json: {details: details}
   end
 
   private
@@ -185,6 +211,7 @@ class MagicDecksController < ApplicationController
       mana_curves = mana_curves.keys.map do |c|
         {name: c, data:mana_curves[c]}
       end
+
       ret = {
         "played_over_drawed" =>  played_over_drawed, 
         "played_over_sims" => played_over_sims, 

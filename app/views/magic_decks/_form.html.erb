@@ -22,6 +22,7 @@
         <span class="material-icons material-symbols-rounded paste-deck" data-action='click->magic-decks#paste' >
           content_paste_go
         </span>
+        <input type="hidden" data-magic-decks-target="deckChangedFlg" />
       </div>
 
 
@@ -43,6 +44,19 @@
       <%= form.submit t(:simulate), class: ['btn', 'btn-secondary', 'mb-5'] %>
     </div>
 
+    <h4 class="text-dark"><%= simple_format(t(:legalities)) %></h4>
+    <div class="column ">
+
+      <div class="row legality">
+        <%= select_tag "legality", options_from_collection_for_select(@formats, "name", "name"), class: 'form-select',
+         'data-action': 'change->magic-decks#legalityChange', 'data-magic-decks-target': "legality" %>
+      </div>
+
+      <div class="row legalities">
+      </div>
+
+      <input type="hidden" data-magic-decks-target="details" />
+    </div>
 
     <h4 class="text-dark"><%= simple_format(t(:propability_play_if_draw)) %></h4>
     <% if @played_over_drawed %>

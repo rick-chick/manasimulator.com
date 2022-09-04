@@ -56,6 +56,7 @@ form {
   flex-direction: row;
 }
 
+
 .column {
   display: flex;
   flex-direction: column;
@@ -94,4 +95,55 @@ form img {
   top: 20px;
   cursor: pointer;
   z-index: 5;
+}
+
+div.legality {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+div.legality select {
+  max-width: 250px;
+  height: 100%;
+}
+
+div.legality button {
+  max-width: 150px;
+  
+}
+
+div.legality button p {
+  margin: 0px;
+}
+.loader {
+  align-items: center;
+  background: #fff;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 999;
+  &::after {
+    animation: loader 0.5s linear infinite;
+    border: 1px solid blue;
+    border-radius: 50%;
+    border-right: 1px solid rgba(orange, 0.2);
+    border-top: 1px solid rgba(orange, 0.2);
+    content: "";
+    margin-top: 30px;
+    height: 70px;
+    width: 70px;
+  }
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

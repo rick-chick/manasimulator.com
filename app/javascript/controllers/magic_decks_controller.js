@@ -4,7 +4,17 @@ import $ from 'jquery';
 
 export default class extends Controller {
 
-  static targets = ['deck', 'numcards']
+  static targets = [
+    // cards input area
+    'deck', 
+    // cards size
+    'numcards', 
+    // legality selected at select box
+    'legality', 
+    // card details includes legalities 
+    'details', 
+    // cards input area changed after card details scraped
+    'deckChangedFlg']
   ctrlDown = false
   ctrlKey = 17
   cmdKey = 91
@@ -15,6 +25,7 @@ export default class extends Controller {
   }
 
   deckChange(e) {
+    this.deckChangedFlgTarget.value = true;
     var deck = this.deckTarget.value;
     if (!deck) {
       return;
@@ -87,6 +98,7 @@ export default class extends Controller {
                     })
                       .done(function(data) {
                         _self.deckTarget.value = data["deck"];
+                        this.deckChangedFlgTarget.value = true;
                       })
                       .fail(function() {
                         alert("error!");
@@ -114,6 +126,86 @@ export default class extends Controller {
 
       }
     )
+  }
+
+  legalityChange(e) {
+    var _self = this;
+    var deck = this.deckTarget.value;
+    var legality = this.legalityTarget.value;
+    var details = this.detailsTarget.value; 
+    if (!deck || !legality) {
+      return;
+    }
+    var updateLegalities = function(data) {
+      $('.legalities div').remove();
+      console.log(data);
+
+      var panel = $('.legalities')[0];
+      panel.style.display =  'flex';
+      panel.style.flexDirection = 'column';
+      panel.style.width = '100%';
+      panel.style.paddingTop = "15px";
+
+      for (var i = 0; i < data.details.length; i++) {
+        var card = data.details[i];
+
+        var rowDiv = $('<div>');
+        var nameDiv = $('<div>');
+        var lnkDiv = $('<a>');
+        var legalityDiv = $('<div>');
+
+        lnkDiv[0].href = 'https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=' + card.multiverseid;
+        lnkDiv[0].target = "_blank";
+        lnkDiv.text(card.name);
+
+        nameDiv[0].appendChild(lnkDiv[0]);
+
+        legalityDiv.text(card.legalities[legality].name);
+
+        rowDiv[0].style.display = "flex"
+        rowDiv[0].style.flexDirection = "row";
+        rowDiv[0].style.justifyContent = "space-between";
+
+        rowDiv[0].appendChild(nameDiv[0]);
+        rowDiv[0].appendChild(legalityDiv[0]);
+
+        panel.appendChild(rowDiv[0]);
+        _self.deckChangedFlgTarget.value = false;
+      }
+    };
+
+    if (!details || _self.deckChangedFlgTarget.value == "true") {
+      $('.legalities div').remove();
+      var div = $("<div>")[0];
+      div.classList.add("loader");
+      $('.legalities')[0].appendChild(div);
+      var json = {
+        "magic_deck": {
+          "cards": deck
+        }
+      };
+      let url = '/magic_decks/legalities';
+      $.ajax({
+        url: url,
+        headers: {
+          'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        data: json,
+        dataType: "json"
+      })
+        .done(function(data) {
+          _self.detailsTarget.value = JSON.stringify(data);
+          updateLegalities(data);
+        })
+        .fail(function() {
+          alert("error!");
+        })
+        .always(function() {
+        });
+    } else {
+      updateLegalities(JSON.parse(_self.detailsTarget.value));
+    };
   }
 
 }

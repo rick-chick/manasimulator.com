@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get 'magic_decks', to: "magic_decks#index"
     post 'magic_decks', to: "magic_decks#create"
     post 'magic_decks/image', to: "magic_decks#image"
+    post 'magic_decks/legalities', to: "magic_decks#legalities"
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
