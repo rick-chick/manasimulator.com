@@ -122,7 +122,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    manasimu (0.0.31)
+    manasimu (0.0.36)
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
@@ -250,7 +250,7 @@ DEPENDENCIES
   http_accept_language
   importmap-rails
   jbuilder
-  manasimu (= 0.0.31)
+  manasimu (= 0.0.36)
   pg
   puma (~> 5.0)
   rails (~> 7.0.2, >= 7.0.2.4)
