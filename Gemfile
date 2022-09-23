@@ -43,7 +43,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
 gem "rice"
-gem "manasimu", "0.0.39"
+gem "manasimu", "0.0.40"
 gem "timeout"
 gem "chartkick"
 gem "http_accept_language"
