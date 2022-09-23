@@ -42,7 +42,8 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-gem "manasimu", "0.0.36"
+gem "rice"
+gem "manasimu", "0.0.38"
 gem "timeout"
 gem "chartkick"
 gem "http_accept_language"
